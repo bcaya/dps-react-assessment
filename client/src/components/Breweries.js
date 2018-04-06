@@ -1,26 +1,25 @@
 import React from 'react'; 
 import axios from 'axios';
 import { Button, Grid, Card, List, Container, Segment } from 'semantic-ui-react';
-import AllBeers from './AllBeers'
 
-class Beers extends React.Component { 
-  state = { beers: [] }
+class Breweries extends React.Component { 
+  state = { breweries: [] }
 
   componentDidMount(){
-    axios.get('/api/all_beers')
-      .then ( res => this.setState({ beers: res.data.entries }))
+    axios.get('/api/all_breweries')
+      .then ( res => this.setState({ breweries: res.data.entries }))
   }
   
-  showBeers = () => { 
-      return this.state.beers.map((beer, key) => {
+  showBreweries = () => { 
+      return this.state.breweries.map((brewery, key) => {
      return(
      <div>
 
-    <Card color="yellow" key={beer.name}>
+    <Card color="yellow" key={brewery.name}>
       <Card.Content>
-        <Card.Header>{beer.name}</Card.Header>
-        <Card.Meta>ABV: {beer.abv}</Card.Meta>
-        <Card.Description>{beer.description}</Card.Description>
+        <Card.Header>{brewery.name}</Card.Header>
+        <Card.Meta>Established: {brewery.established}</Card.Meta>
+        <Card.Description>{brewery.description}</Card.Description>
       </Card.Content>
     </Card>
       </div>
@@ -41,7 +40,7 @@ class Beers extends React.Component {
               <Grid.Column width={8}>
                 
                   <Card.Group stackable itemsPerRow={6}>
-                    {this.showBeers()}
+                    {this.showBreweries()}
                   </Card.Group>
               </Grid.Column>
              
@@ -54,4 +53,4 @@ class Beers extends React.Component {
 }
   
 
-export default Beers; 
+export default Breweries; 
