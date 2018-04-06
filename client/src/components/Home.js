@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Header, Segment, Divider, Grid, Image } from 'semantic-ui-react';
 import ReactMarkDown from 'react-markdown';
 import axios from 'axios';
-import dpsLogo from '../images/dpsLogo.svg';
+import bart from '../images/33.png';
 
 class Home extends Component {
   state = { assignmentMarkdown: '' };
@@ -21,7 +21,7 @@ class Home extends Component {
     return(
       <Segment basic>
         <Segment basic textAlign='center'>
-          <Image style={styles.centered} size='tiny' src={dpsLogo} alt='DevPoint Studios Logo' />
+          <Image style={styles.centered} size='small' src={bart} alt='DevPoint Studios Logo' />
           <Header as='h1' style={styles.header}>DevPoint Studios React Assessment</Header>
         </Segment>
         <Grid>
