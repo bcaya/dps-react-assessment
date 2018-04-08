@@ -37,13 +37,9 @@ class Breweries extends React.Component {
   <Container style={{height: '80vh', width:'100vh', overflowX: 'scroll'}}>
       <Grid>
         <Grid.Row>
-              <Grid.Column width={8}>
-                
                   <Card.Group stackable itemsPerRow={6}>
                     {this.showBreweries()}
                   </Card.Group>
-              </Grid.Column>
-             
         </Grid.Row>
       </Grid>
   </Container>
