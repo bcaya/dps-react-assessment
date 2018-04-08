@@ -1,13 +1,23 @@
 import React from 'react'; 
 import axios from 'axios';
-import { Button, Grid, Card, List, Container, Segment } from 'semantic-ui-react';
+import { Button, Grid, Card, List, Container, Segment, Visibility, Image, Modal, Header} from 'semantic-ui-react';
 
 class Breweries extends React.Component { 
-  state = { breweries: [] }
+  state = { breweries: [], page: 1, totalPages:0 }
 
   componentDidMount(){
     axios.get('/api/all_breweries')
       .then ( res => this.setState({ breweries: res.data.entries }))
+  }
+
+  onBottomVisible=()=>{
+    const page = this.state.page; 
+    axios.get(`/api/all_breweries?page=${page}&per_page=10`)
+      .then( ({data, headers}) => {
+        this.setState( state => {
+          return {breweries: [...state.breweries, ...data.entries], page: state.page+1}
+        })
+      })
   }
   
   showBreweries = () => { 
@@ -18,8 +28,17 @@ class Breweries extends React.Component {
     <Card color="yellow" key={brewery.name}>
       <Card.Content>
         <Card.Header>{brewery.name}</Card.Header>
-        <Card.Meta>Established: {brewery.established}</Card.Meta>
-        <Card.Description>{brewery.description}</Card.Description>
+        <Card.Meta>{brewery? brewery.established : 'Untitled'}</Card.Meta>
+        <Modal trigger={<Button>Show More!</Button>}>
+          <Modal.Header>{brewery.name}</Modal.Header>
+          <Modal.Content>
+
+          <Modal.Description>
+            <Header>Brewery Description</Header>
+            <p>{brewery.description}</p>
+          </Modal.Description>
+          </Modal.Content>
+        </Modal>
       </Card.Content>
     </Card>
       </div>
@@ -33,15 +52,22 @@ class Breweries extends React.Component {
     return (
 
  
-<Segment basic>
-  <Container style={{height: '80vh', width:'100vh', overflowX: 'scroll'}}>
+<Segment>
+  <Container style={{height: '600vh', width:'1000vh', overflowX: 'scroll', paddingTop:'100px'}}>
+   <div>
+    <Visibility
+      once = {true}
+      continuous={true}
+      onBottomVisible={()=>this.onBottomVisible()}
+    >
+  
       <Grid>
-        <Grid.Row>
-                  <Card.Group stackable itemsPerRow={6}>
+                  <Card.Group itemsPerRow={3}>
                     {this.showBreweries()}
                   </Card.Group>
-        </Grid.Row>
       </Grid>
+  </Visibility>
+  </div>
   </Container>
 </Segment>
     )

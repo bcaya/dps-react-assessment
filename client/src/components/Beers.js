@@ -5,8 +5,6 @@ import AllBeers from './AllBeers'
 
 class Beers extends React.Component { 
   state = { beers: [], page:1, totalPages:0 }
-  
-
   componentDidMount(){
     axios.get('/api/all_beers')
       .then ( res => this.setState({ beers: res.data.entries,  totalPages: res.data.total_pages }))
@@ -32,7 +30,6 @@ class Beers extends React.Component {
     return this.state.beers.map((beer, index) => {
      return(
        <div>
-        
           <Table.Row>
             <Table.Cell  >
                 {beer? beer.name : 'Untitled'}
