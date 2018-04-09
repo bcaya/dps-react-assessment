@@ -7,7 +7,7 @@ import Beers from './Beers'
 import Breweries from './Breweries'
 import { Switch, Route } from 'react-router-dom';
 import { Segment } from 'semantic-ui-react';
-
+import BeerView from './BeerView';
 class App extends Component {
   render() {
     return (
@@ -17,6 +17,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/beers' component={Beers} />
+          <Route exact path='/beer/:name'component = {BeerView}/>
           <Route exact path='/breweries' component={Breweries}/>
           <Route component={NoMatch} />
         </Switch>
@@ -27,7 +28,7 @@ class App extends Component {
 
 const styles = {
   background: {
-    backgroundColor: 'black',
+    backgroundColor: '#5A6F72',
   },
 }
 

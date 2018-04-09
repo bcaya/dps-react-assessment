@@ -1,6 +1,6 @@
 import React from 'react'; 
 import axios from 'axios';
-import { Button, Grid, Card, List, Container, Segment, Visibility, Image, Modal, Header} from 'semantic-ui-react';
+import { Button, Grid, Card, List, Container,Loader, Segment, Visibility, Image, Modal, Header, Dimmer} from 'semantic-ui-react';
 
 class Breweries extends React.Component { 
   state = { breweries: [], page: 1, totalPages:0 }
@@ -25,14 +25,13 @@ class Breweries extends React.Component {
      return(
      <div>
 
-    <Card color="yellow" key={brewery.name}>
+    <Card fixed color="yellow" key={brewery.name}>
       <Card.Content>
         <Card.Header>{brewery.name}</Card.Header>
         <Card.Meta>{brewery? brewery.established : 'Untitled'}</Card.Meta>
-        <Modal trigger={<Button>Show More!</Button>}>
+        <Modal trigger={<Button>Show More!</Button>} closeIcon>
           <Modal.Header>{brewery.name}</Modal.Header>
           <Modal.Content>
-
           <Modal.Description>
             <Header>Brewery Description</Header>
             <p>{brewery.description}</p>
@@ -50,24 +49,22 @@ class Breweries extends React.Component {
 
   render() { 
     return (
-
- 
 <Segment>
-  <Container style={{height: '600vh', width:'1000vh', overflowX: 'scroll', paddingTop:'100px'}}>
+  <Container style={{height: '400vh', width:'1000vh', overflowX: 'scroll', paddingTop:'100px'}}>
    <div>
     <Visibility
       once = {true}
       continuous={true}
       onBottomVisible={()=>this.onBottomVisible()}
     >
-  
       <Grid>
                   <Card.Group itemsPerRow={3}>
                     {this.showBreweries()}
                   </Card.Group>
-      </Grid>
+      </Grid>                       
   </Visibility>
   </div>
+
   </Container>
 </Segment>
     )
