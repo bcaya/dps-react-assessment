@@ -31,19 +31,12 @@ class BeerView extends React.Component {
           {beer.labels? this.getLabel() : <Item.Image src={imagePlaceholder} />}
           <Item.Content>
             <Item.Header as='h3'>{beer.name}</Item.Header>
-            {/* <Item.Meta>
-              <h4>ABV: {beer.abv}</h4>
-              <span>Category</span>
-            </Item.Meta> */}
-            {/* <Item.Description>
-              {beer.description}
-            </Item.Description> */}
             <Item.Extra>
               <Segment inverted>
                 <List divided inverted>
                   <List.Item>
                     <List.Content>
-                      <List.Header>Description <br/>{beer.description} </List.Header>
+                      <List.Header>Description <br/>{beer.description? beer.description : "Sorry No Description Available for this beer"} </List.Header>
                     </List.Content>
                   </List.Item>
                   <List.Item>

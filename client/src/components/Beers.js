@@ -4,6 +4,7 @@ import { Button, Image, Grid, Card,Container, Segment,Header,Icon, Visibility} f
 import AllBeers from './AllBeers'
 import {Link} from 'react-router-dom';
 import bart from '../images/33.png';
+import imagePlaceholder from '../images/imagePlaceholder.png'
 
 class Beers extends React.Component { 
   state = { beers: [], page:1, totalPages:0 }
@@ -23,27 +24,32 @@ class Beers extends React.Component {
       })
   }
 
-  
 //function to load and map the beer data
-  showBeers = () => { 
+  showBeers = () => {
     return this.state.beers.map((beer, key) => {
      return(
-       <div>
-              <Card color="yellow" key={key} fixed>
-              {/* <Image src={beer? beer.labels.icon : 'CurrentlyUnavalilable'}/> */}
-                <Card.Header>
-                    {beer? beer.name : 'Currently Unavailable'}
-                </Card.Header>
-                <Card.Description>
-                    {beer? beer.style.name : 'Currently Unavailable'}
-                </Card.Description>
-                <Card.Meta>
-                  {beer? beer.abv : 'Currently Unavailable'}
-                </Card.Meta>
-                <Link to={`/beer/${beer.name}`}>
-                  <Button attached='bottom'>Click for more info!</Button>
-                </Link>
-            </Card> 
+        <div>
+          <Card color="yellow" key={key} centered>
+            {beer.labels?
+            <Image size="medium" src={beer.labels.medium}/> 
+            : 
+            <Image size="medium" src={imagePlaceholder}/>}
+            <Card.Header>
+                {beer.name? beer.name
+                :
+                'Currently Unavailable'}
+            </Card.Header>
+            <Card.Description>
+                Style of Beer: {beer.style.name? beer.style.name
+                : 'Style not Available'}
+            </Card.Description>
+            <Card.Meta>
+             ABV: {beer.abv? beer.abv : 'Currently Unavailable'}
+            </Card.Meta>
+            <Link to={`/beer/${beer.name}`}>
+              <Button attached='bottom'>Click for more info!</Button>
+            </Link>
+        </Card> 
       </div>
           )
         }
@@ -53,40 +59,28 @@ class Beers extends React.Component {
 
   render() { 
     return (
-<Segment>
-  <Segment basic textAlign='center'>
-    <Image style={styles.centered} size='small' src={bart} alt='DevPoint Studios Logo' />
-    <Header as='h1' style={styles.header}>DevPoint Studios React Assessment</Header>
-  </Segment>
-    <Grid>
-      <Grid.Column computer={8} tablet={8} mobile={16}>
-      <Visibility
-        once = {true}
-        continuous={true}
-        onBottomVisible={()=>this.onBottomVisible()}
-      >
-      {/* <Table centered>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell >Beer Name</Table.HeaderCell>
-            <Table.HeaderCell >Style</Table.HeaderCell>
-            <Table.HeaderCell >ABV</Table.HeaderCell>
-            <Table.HeaderCell >Organic?</Table.HeaderCell>
-          </Table.Row>
-      </Table.Header>
-      <Table.Row > */}
-      <Card.Group itemsPerRow={4}>
-         {this.showBeers()}
-        {/* </Table.Row>
-      </Table> */}
-      </Card.Group>
-      </Visibility>
+      <Segment>
+        <Segment basic textAlign='center'>
+          <Image style={styles.centered} size='small' src={bart} alt='DevPoint Studios Logo' />
+          <Header as='h1' style={styles.header}>DevPoint Studios React Assessment</Header>
+        </Segment>
+          <Grid celled padded centered>
+            <Grid.Column computer={12} tablet={12} mobile={16}>
+              <Visibility
+                once = {true}
+                continuous={true}
+                onBottomVisible={()=>this.onBottomVisible()}
+              >
+                <Card.Group >
+                  {this.showBeers()}
+                </Card.Group>
+              </Visibility>
             </Grid.Column>
           </Grid>
-  </Segment>
-    )
-   }
-}
+        </Segment>
+          )
+        }
+      }
 
 const styles = {
   centered: {
